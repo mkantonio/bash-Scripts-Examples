@@ -1,0 +1,22 @@
+script para extraer los archivos de una plantilla html
+cat raw | sed 's/^ *//g' | sed 's/^<!--//g' | grep -o -E '(href|src){1}="[a-zA-Z0-9_/\.-]+\.(css|html|js)' | sed 's/^src="\|^href="//g' > h
+
+explicación:
+cat raw 			#'raw' es el archivo que uno esta leyendo
+sed 's/^ *//g'		#eliminar los espacios en blanco al principio de cada linea
+sed 's/^<!--//g'	#eliminar los comentarios del fichero html
+grep -o -E '(href|src){1}="[a-zA-Z0-9_/\.-]+\.(css|html|js)'	#grep con opcion de -o (para que muestre solo lo que coincide) y -E (regex extendidas); (href|src){1} coincide con los patrones de 'href' o 'src' una sola vez; [a-zA-Z0-9_/\.-]+ coincide con los patrones letras mayusculas y minusculas incluido los numeros con los signos '_', '/', '.', '-' una o más veces; \.(css|html|js) patron que indica que existe un punto '.' seguido los patrones 'css' o 'html' o 'js'
+sed 's/^src="\|^href="//g' > h			#elimina los patrones que comienzen '^' con 'src="' o 'href="' para guardarlos en un archivo 'h'
+
+Entrada:
+<!-- Bootstrap 3.3.7 -->
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+
+Salida:
+bower_components/bootstrap/dist/css/bootstrap.min.css
+bower_components/font-awesome/css/font-awesome.min.css
+bower_components/Ionicons/css/ionicons.min.css
