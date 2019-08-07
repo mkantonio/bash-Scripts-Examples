@@ -1,4 +1,4 @@
-script para extraer los archivos de una plantilla html
+#Script para extraer los archivos de una plantilla html
 cat raw | sed 's/^ *//g' | sed 's/^<!--//g' | grep -o -E '(href|src){1}="[a-zA-Z0-9_/\.-]+\.(css|html|js)' | sed 's/^src="\|^href="//g' > h
 
 explicación:
